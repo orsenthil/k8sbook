@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<!-- build:css v/cmx.css -->
+<link rel="stylesheet" href="styles/cmx.css">
+<link rel="stylesheet" href="styles/cmx-overlay.css">
+<!-- endbuild -->
+<!-- build:js v/cmx.js -->
+<script data-main="scripts/main" src="scripts/vendor/require.js"></script>
+<!-- endbuild -->
+<body>
+  <div style="max-width:900px; -webkit-transform:rotate(0deg);">
+
+    <scene id="scene1">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">Monday morning, deploying to prod</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-5,117|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|-1,59">
+        <bubble t="translate(9,11)" pose="0,0|-20,10|-81,49|19,66|-21,145|-73,109">
+          <tspan x="0" y="-3em">I deployed my app</tspan>
+          <tspan x="0" y="-1em">with <tspan fill="blue">serviceAccountName:</tspan></tspan>
+          <tspan x="0" y="0em"><tspan fill="blue">my-app</tspan></tspan>
+          <tspan x="0" y="2em">it has all the</tspan>
+          <tspan x="0" y="3em">RBAC bindings</tspan>
+          <tspan x="8" y="76px">ship it!</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|18,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|-14,24|-36,69|27,28|8,72|-35,93">
+          <tspan x="0" y="0em">kubectl apply</tspan>
+          <tspan x="0" y="1em">looks good</tspan>
+          <tspan x="0" y="2em">pods are running!</tspan>
+        </bubble>
+      </actor>
+    </scene>
+ 
+    <scene id="scene2">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">Meanwhile, inside the API server...</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-1,114|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|13,83">
+        <bubble t="translate(-3,0)" pose="0,0|-12,22|-83,104|45,21|-37,182|-58,162">
+          <tspan x="0" y="-3em" fill="red">I am the Kyverno</tspan>
+          <tspan x="0" y="-1.5em" fill="red">MutatingWebhook</tspan>
+          <tspan x="0" y="1em">I shall patch this</tspan>
+          <tspan x="0" y="2em">pod's SA to <tspan fill="red">default</tspan></tspan>
+          <tspan x="0" y="3em">for "security"</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|13,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|7,33|14,66|-63,30|-52,62|-94,113">
+          <tspan x="0" y="0em">JSON Patch:</tspan>
+          <tspan x="0" y="1em" fill="blue">op: replace</tspan>
+          <tspan x="0" y="2em" fill="blue">path: /spec/</tspan>
+          <tspan x="0" y="3em" fill="blue">serviceAccountName</tspan>
+          <tspan x="0" y="4em" fill="red">value: default</tspan>
+        </bubble>
+      </actor>
+    </scene>
+ 
+    <scene id="scene3">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">Tuesday, 3 AM — PagerDuty goes off</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-5,117|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|-1,59">
+        <bubble t="translate(9,11)" pose="0,0|-20,10|-81,49|19,66|-21,145|-73,109">
+          <tspan x="0" y="-3em">The monitoring agent</tspan>
+          <tspan x="0" y="-1em">is getting</tspan>
+          <tspan x="0" y="1em" fill="red">403 Forbidden!!</tspan>
+          <tspan x="0" y="3em">"system:anonymous</tspan>
+          <tspan x="0" y="4em">cannot list pods"</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|18,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|-14,24|-36,69|27,28|8,72|-35,93">
+          <tspan x="0" y="0em">but... my YAML says</tspan>
+          <tspan x="0" y="1em">serviceAccountName:</tspan>
+          <tspan x="0" y="2em" fill="blue">my-app</tspan>
+          <tspan x="0" y="3em">that has permissions!</tspan>
+        </bubble>
+      </actor>
+    </scene>
+ 
+    <scene id="scene4">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">4 hours of debugging later...</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-1,114|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|13,83">
+        <bubble t="translate(-3,0)" pose="0,0|-12,22|-83,104|45,21|-37,182|-58,162">
+          <tspan x="0" y="-3em">kubectl get pod -o</tspan>
+          <tspan x="0" y="-1.5em">jsonpath=</tspan>
+          <tspan x="0" y="0em">'{.spec.serviceAccountName}'</tspan>
+          <tspan x="0" y="2em">output: <tspan fill="red">default</tspan></tspan>
+          <tspan x="0" y="4em">WAIT. WHAT.</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|13,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|7,33|14,66|-63,30|-52,62|-94,113">
+          <tspan x="0" y="0em">The pod spec says</tspan>
+          <tspan x="0" y="1em" fill="red">default</tspan>
+          <tspan x="0" y="2em">but my deployment</tspan>
+          <tspan x="0" y="3em">says <tspan fill="blue">my-app</tspan>...</tspan>
+          <tspan x="0" y="5em">something CHANGED it</tspan>
+        </bubble>
+      </actor>
+    </scene>
+ 
+    <scene id="scene5">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">The revelation</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-5,117|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|-1,59">
+        <bubble t="translate(9,11)" pose="0,0|-20,10|-81,49|19,66|-21,145|-73,109">
+          <tspan x="0" y="-3em">kubectl get</tspan>
+          <tspan x="0" y="-1em">mutatingwebhook</tspan>
+          <tspan x="0" y="0em">configurations</tspan>
+          <tspan x="0" y="2em">...</tspan>
+          <tspan x="0" y="3em" fill="red">KYVERNO.</tspan>
+          <tspan x="0" y="4em" fill="red">IT WAS KYVERNO.</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|18,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|-14,24|-36,69|27,28|8,72|-35,93">
+          <tspan x="0" y="-1em">A ClusterPolicy was</tspan>
+          <tspan x="0" y="0em">mutating ALL pods to</tspan>
+          <tspan x="0" y="1em">set SA to <tspan fill="red">default</tspan></tspan>
+          <tspan x="0" y="3em">the pod lost its</tspan>
+          <tspan x="0" y="4em">token silently...</tspan>
+        </bubble>
+      </actor>
+    </scene>
+ 
+    <scene id="scene6" height="230">
+      <label t="translate(0,225)">
+        <tspan x="0" y="0em">The lesson learned</tspan>
+      </label>
+      <actor t="translate(209,4) rotate(2)" pose="-41,48|-10,105|0,88|0,78|0,68|0,48|-5,23|-10,-2|5,23|10,-2|-11,70|-4,54|17,86|-4,110">
+        <bubble t="translate(-2,-9)" pose="0,0|-13,24|-29,52|-86,-4|-99,79|-165,70">
+          <tspan x="0" y="-2em">Always check the</tspan>
+          <tspan x="0" y="-0.5em" fill="red">actual pod spec</tspan>
+          <tspan x="0" y="1em">not the deployment YAML</tspan>
+          <tspan x="0" y="3em">kubectl get pod X</tspan>
+          <tspan x="0" y="4em">-o jsonpath=</tspan>
+          <tspan x="0" y="5em">'{.spec.serviceAccountName}'</tspan>
+        </bubble>
+      </actor>
+    </scene>
+ 
+    <scene id="scene7" width="300" height="98" margin-y="3" frame="no">
+      <label t="translate(28,88)" pose="0,0|1,-9">
+        <tspan x="0" y="-1em">~ mutating webhooks edit pods silently</tspan>
+        <tspan x="0" y="0em">~ your YAML is not what gets persisted</tspan>
+        <tspan x="0" y="1em">~ check pod spec, not deploy spec</tspan>
+        <tspan x="0" y="2em">~ kubectl get mutatingwebhookconfigurations</tspan>
+        <tspan x="0" y="3em">~ <tspan fill="red">system:anonymous = no token reached API</tspan></tspan>
+      </label>
+      <actor t="translate(192,29)" pose="73,-56|69,46|73,34|93,22|81,12|82,1|66,-10|63,-39|79,-16|92,-30|63,19|42,19|65,11|40,6">
+      </actor>
+    </scene>
+ 
+  </div>
+</body>

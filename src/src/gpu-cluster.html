@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<!-- build:css v/cmx.css -->
+<link rel="stylesheet" href="styles/cmx.css">
+<link rel="stylesheet" href="styles/cmx-overlay.css">
+<!-- endbuild -->
+<!-- build:js v/cmx.js -->
+<script data-main="scripts/main" src="scripts/vendor/require.js"></script>
+<!-- endbuild -->
+<body>
+  <div style="max-width:900px; -webkit-transform:rotate(0deg);">
+
+    <scene id="scene1">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">Friday afternoon, deploying ML to prod</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-5,117|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|-1,59">
+        <bubble t="translate(9,11)" pose="0,0|-20,10|-81,49|19,66|-21,145|-73,109">
+          <tspan x="0" y="-3em">I'll deploy a HuggingFace</tspan>
+          <tspan x="0" y="-1em">sentiment model on our</tspan>
+          <tspan x="0" y="0em">DigitalOcean K8s cluster</tspan>
+          <tspan x="0" y="2em">distilbert, 260MB</tspan>
+          <tspan x="0" y="3em">how hard can it be?</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|18,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|-14,24|-36,69|27,28|8,72|-35,93">
+          <tspan x="0" y="0em">CPU inference!</tspan>
+          <tspan x="0" y="1em">no GPU needed!</tspan>
+          <tspan x="0" y="2em">we'll save so much money</tspan>
+        </bubble>
+      </actor>
+    </scene>
+
+    <scene id="scene2">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">The first deploy...</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-1,114|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|13,83">
+        <bubble t="translate(-3,0)" pose="0,0|-12,22|-83,104|45,21|-37,182|-58,162">
+          <tspan x="0" y="-3em">Pod is stuck in</tspan>
+          <tspan x="0" y="-1.5em" fill="red">CrashLoopBackOff</tspan>
+          <tspan x="0" y="1em">the model takes 90 seconds</tspan>
+          <tspan x="0" y="2em">to load into RAM and</tspan>
+          <tspan x="0" y="3em">kubelet killed it at 30s</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|13,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|7,33|14,66|-63,30|-52,62|-94,113">
+          <tspan x="0" y="0em" fill="blue">startupProbe:</tspan>
+          <tspan x="0" y="1em" fill="blue">  failureThreshold: 60</tspan>
+          <tspan x="0" y="2em" fill="blue">  periodSeconds: 5</tspan>
+          <tspan x="0" y="4em">give it 5 minutes</tspan>
+          <tspan x="0" y="5em">to load the model!</tspan>
+        </bubble>
+      </actor>
+    </scene>
+
+    <scene id="scene3">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">It works! ...sort of</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-5,117|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|-1,59">
+        <bubble t="translate(9,11)" pose="0,0|-20,10|-81,49|19,66|-21,145|-73,109">
+          <tspan x="0" y="-3em">distilbert: 50ms on CPU</tspan>
+          <tspan x="0" y="-1em">that's fine for a demo!</tspan>
+          <tspan x="0" y="1em">let's try something bigger</tspan>
+          <tspan x="0" y="3em">flan-t5-base for</tspan>
+          <tspan x="0" y="4em">text generation...</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|18,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|-14,24|-36,69|27,28|8,72|-35,93">
+          <tspan x="0" y="0em">flan-t5-base:</tspan>
+          <tspan x="0" y="1em" fill="red">800ms per request</tspan>
+          <tspan x="0" y="3em">users are staring at</tspan>
+          <tspan x="0" y="4em">a loading spinner...</tspan>
+        </bubble>
+      </actor>
+    </scene>
+
+    <scene id="scene4">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">Monday — the boss walks in</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-1,114|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|13,83">
+        <bubble t="translate(-3,0)" pose="0,0|-12,22|-83,104|45,21|-37,182|-58,162">
+          <tspan x="0" y="-3em">We need Qwen3-235B</tspan>
+          <tspan x="0" y="-1em">for the product.</tspan>
+          <tspan x="0" y="1em">Our competitor is</tspan>
+          <tspan x="0" y="2em">using frontier models</tspan>
+          <tspan x="0" y="4em">deploy it on K8s.</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|13,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|7,33|14,66|-63,30|-52,62|-94,113">
+          <tspan x="0" y="0em">that's 235 billion</tspan>
+          <tspan x="0" y="1em">parameters...</tspan>
+          <tspan x="0" y="3em">it needs</tspan>
+          <tspan x="0" y="4em" fill="red">4x H100 GPUs</tspan>
+          <tspan x="0" y="5em" fill="red">($120K/year)</tspan>
+        </bubble>
+      </actor>
+    </scene>
+
+    <scene id="scene5">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">Tuesday — it gets worse</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-5,117|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|-1,59">
+        <bubble t="translate(9,11)" pose="0,0|-20,10|-81,49|19,66|-21,145|-73,109">
+          <tspan x="0" y="-3em">Actually we want</tspan>
+          <tspan x="0" y="-1em" fill="red">Kimi K2.</tspan>
+          <tspan x="0" y="1em">1 TRILLION parameters.</tspan>
+          <tspan x="0" y="3em">the CEO saw a demo</tspan>
+          <tspan x="0" y="4em">and wants it by Friday</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|18,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|-14,24|-36,69|27,28|8,72|-35,93">
+          <tspan x="0" y="-1em">Kimi K2 needs</tspan>
+          <tspan x="0" y="0em" fill="red">8x H100 + NVLink</tspan>
+          <tspan x="0" y="1em" fill="red">1 TB of VRAM</tspan>
+          <tspan x="0" y="3em">that's a full DGX node</tspan>
+          <tspan x="0" y="4em">a $300K machine</tspan>
+        </bubble>
+      </actor>
+    </scene>
+
+    <scene id="scene6">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">Wednesday — the moment of clarity</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-1,114|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|13,83">
+        <bubble t="translate(-3,0)" pose="0,0|-12,22|-83,104|45,21|-37,182|-58,162">
+          <tspan x="0" y="-3em">OK here's the plan:</tspan>
+          <tspan x="0" y="-1em">self-host the small</tspan>
+          <tspan x="0" y="0em">stuff on our K8s</tspan>
+          <tspan x="0" y="2em">embeddings, sentiment,</tspan>
+          <tspan x="0" y="3em">classification — on CPU</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|13,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|7,33|14,66|-63,30|-52,62|-94,113">
+          <tspan x="0" y="-1em">and call the</tspan>
+          <tspan x="0" y="0em">frontier models</tspan>
+          <tspan x="0" y="1em">via <tspan fill="blue">API</tspan></tspan>
+          <tspan x="0" y="3em">Kimi K2: $0.60/M tokens</tspan>
+          <tspan x="0" y="4em">DeepSeek: $2.19/M tokens</tspan>
+          <tspan x="0" y="5em">no DGX node required</tspan>
+        </bubble>
+      </actor>
+    </scene>
+
+    <scene id="scene7">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">Thursday — deploying the hybrid architecture</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-5,117|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|-1,59">
+        <bubble t="translate(9,11)" pose="0,0|-20,10|-81,49|19,66|-21,145|-73,109">
+          <tspan x="0" y="-3em">CPU node pool: $0.06/hr</tspan>
+          <tspan x="0" y="-1em">runs tokenizer, API</tspan>
+          <tspan x="0" y="0em">gateway, caching, routing</tspan>
+          <tspan x="0" y="2em">GPU node pool: 1x T4</tspan>
+          <tspan x="0" y="3em">for our 4B embedding model</tspan>
+          <tspan x="0" y="4em">with <tspan fill="blue">taints + tolerations</tspan></tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|18,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|-14,24|-36,69|27,28|8,72|-35,93">
+          <tspan x="0" y="0em">Frontier LLM calls go</tspan>
+          <tspan x="0" y="1em">through our API gateway</tspan>
+          <tspan x="0" y="2em">with retry + fallback</tspan>
+          <tspan x="0" y="4em">if Kimi is down,</tspan>
+          <tspan x="0" y="5em">fall back to DeepSeek</tspan>
+        </bubble>
+      </actor>
+    </scene>
+
+    <scene id="scene8">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">Friday — prod is live and the boss is happy</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-1,114|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|13,83">
+        <bubble t="translate(-3,0)" pose="0,0|-12,22|-83,104|45,21|-37,182|-58,162">
+          <tspan x="0" y="-3em">Embeddings: 5ms</tspan>
+          <tspan x="0" y="-1em">(self-hosted, GPU)</tspan>
+          <tspan x="0" y="1em">Sentiment: 50ms</tspan>
+          <tspan x="0" y="2em">(self-hosted, CPU)</tspan>
+          <tspan x="0" y="4em">Reasoning: ~75 tok/s</tspan>
+          <tspan x="0" y="5em">(Kimi K2 API)</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|13,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|7,33|14,66|-63,30|-52,62|-94,113">
+          <tspan x="0" y="0em">total infra cost:</tspan>
+          <tspan x="0" y="1em" fill="blue">$200/month</tspan>
+          <tspan x="0" y="2em">+ API usage</tspan>
+          <tspan x="0" y="4em">instead of</tspan>
+          <tspan x="0" y="5em" fill="red">$25K/month for a DGX</tspan>
+        </bubble>
+      </actor>
+    </scene>
+
+    <scene id="scene9" height="230">
+      <label t="translate(0,225)">
+        <tspan x="0" y="0em">The lesson learned</tspan>
+      </label>
+      <actor t="translate(209,4) rotate(2)" pose="-41,48|-10,105|0,88|0,78|0,68|0,48|-5,23|-10,-2|5,23|10,-2|-11,70|-4,54|17,86|-4,110">
+        <bubble t="translate(-2,-9)" pose="0,0|-13,24|-29,52|-86,-4|-99,79|-165,70">
+          <tspan x="0" y="-2em">You don't deploy</tspan>
+          <tspan x="0" y="-0.5em">trillion-parameter models</tspan>
+          <tspan x="0" y="1em">on your K8s cluster.</tspan>
+          <tspan x="0" y="3em">You deploy a <tspan fill="blue">smart router</tspan></tspan>
+          <tspan x="0" y="4.5em">that knows when to call</tspan>
+          <tspan x="0" y="6em">an API vs run locally.</tspan>
+        </bubble>
+      </actor>
+    </scene>
+
+    <scene id="scene10" width="300" height="98" margin-y="3" frame="no">
+      <label t="translate(20,67) rotate(-2)" pose="0,0|1,-9">
+        <tspan x="0" y="-2em">~ distilbert on CPU: fine for demos</tspan>
+        <tspan x="0" y="-1em">~ startupProbe saves your ML pods</tspan>
+        <tspan x="0" y="0em">~ GPU nodes need taints + tolerations</tspan>
+        <tspan x="0" y="1em">~ MoE models: 1T params, 32B active</tspan>
+        <tspan x="0" y="2em">~ <tspan fill="red">self-host small, API the frontier</tspan></tspan>
+        <tspan x="0" y="3em">~ memory bandwidth is the real bottleneck</tspan>
+      </label>
+      <actor t="translate(192,29)" pose="73,-56|69,46|73,34|93,22|81,12|82,1|66,-10|63,-39|79,-16|92,-30|63,19|42,19|65,11|40,6">
+      </actor>
+    </scene>
+
+  </div>
+</body>

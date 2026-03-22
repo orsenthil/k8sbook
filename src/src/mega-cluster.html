@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<!-- build:css v/cmx.css -->
+<link rel="stylesheet" href="styles/cmx.css">
+<link rel="stylesheet" href="styles/cmx-overlay.css">
+<!-- endbuild -->
+<!-- build:js v/cmx.js -->
+<script data-main="scripts/main" src="scripts/vendor/require.js"></script>
+<!-- endbuild -->
+<body>
+  <div style="max-width:900px; -webkit-transform:rotate(0deg);">
+
+    <scene id="scene1">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">Monday morning, reading Hacker News</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-5,117|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|-1,59">
+        <bubble t="translate(9,11)" pose="0,0|-20,10|-81,49|19,66|-21,145|-73,109">
+          <tspan x="0" y="-3em">OpenAI tested Kubernetes</tspan>
+          <tspan x="0" y="-1em">with ONE MILLION nodes</tspan>
+          <tspan x="0" y="1em">that's insane</tspan>
+          <tspan x="0" y="3em">I wonder where</tspan>
+          <tspan x="0" y="4em">the bottleneck is...</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|18,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|-14,24|-36,69|27,28|8,72|-35,93">
+          <tspan x="0" y="0em">you'd need a</tspan>
+          <tspan x="0" y="1em">data center for that</tspan>
+          <tspan x="0" y="3em">or would you...</tspan>
+        </bubble>
+      </actor>
+    </scene>
+
+    <scene id="scene2">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">The realization</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-1,114|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|13,83">
+        <bubble t="translate(-3,0)" pose="0,0|-12,22|-83,104|45,21|-37,182|-58,162">
+          <tspan x="0" y="-3em">Wait. A "node" in</tspan>
+          <tspan x="0" y="-1em">Kubernetes is just a</tspan>
+          <tspan x="0" y="0em" fill="blue">JSON document in etcd</tspan>
+          <tspan x="0" y="2em">it's like 3KB.</tspan>
+          <tspan x="0" y="3em">1000 nodes = 3MB.</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|13,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|7,33|14,66|-63,30|-52,62|-94,113">
+          <tspan x="0" y="0em">the expensive part</tspan>
+          <tspan x="0" y="1em">is the kubelets,</tspan>
+          <tspan x="0" y="2em">the container runtimes,</tspan>
+          <tspan x="0" y="3em">the actual machines.</tspan>
+          <tspan x="0" y="5em">what if we just...</tspan>
+          <tspan x="0" y="6em" fill="blue">don't have those?</tspan>
+        </bubble>
+      </actor>
+    </scene>
+
+    <scene id="scene3">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">Enter KWOK — Kubernetes Without Kubelet</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-5,117|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|-1,59">
+        <bubble t="translate(9,11)" pose="0,0|-20,10|-81,49|19,66|-21,145|-73,109">
+          <tspan x="0" y="-2em">KWOK is a single pod that</tspan>
+          <tspan x="0" y="0em">fakes kubelet heartbeats</tspan>
+          <tspan x="0" y="2em">it just PATCHes node.status</tspan>
+          <tspan x="0" y="3em">and renews the Lease object</tspan>
+          <tspan x="0" y="5em">that's ALL a kubelet does</tspan>
+          <tspan x="0" y="6em">to prove it's alive</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|18,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|-14,24|-36,69|27,28|8,72|-35,93">
+          <tspan x="0" y="0em">no container runtime</tspan>
+          <tspan x="0" y="1em">no cgroups</tspan>
+          <tspan x="0" y="2em">no network</tspan>
+          <tspan x="0" y="3em">no image pulls</tspan>
+          <tspan x="0" y="5em">just vibes and</tspan>
+          <tspan x="0" y="6em">JSON patches</tspan>
+        </bubble>
+      </actor>
+    </scene>
+
+    <scene id="scene4">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">The experiment begins</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-1,114|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|13,83">
+        <bubble t="translate(-3,0)" pose="0,0|-12,22|-83,104|45,21|-37,182|-58,162">
+          <tspan x="0" y="-3em" fill="blue">minikube start</tspan>
+          <tspan x="0" y="-1em" fill="blue">  --cpus=2 --memory=4096</tspan>
+          <tspan x="0" y="1em">that's my whole laptop</tspan>
+          <tspan x="0" y="2em">allocation for this</tspan>
+          <tspan x="0" y="4em">now let me create</tspan>
+          <tspan x="0" y="5em" fill="red">1000 fake nodes</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|13,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|7,33|14,66|-63,30|-52,62|-94,113">
+          <tspan x="0" y="0em">for i in $(seq 1 1000)</tspan>
+          <tspan x="0" y="1em">  kubectl apply Node...</tspan>
+          <tspan x="0" y="3em">this is either brilliant</tspan>
+          <tspan x="0" y="4em">or my laptop is about</tspan>
+          <tspan x="0" y="5em">to catch fire</tspan>
+        </bubble>
+      </actor>
+    </scene>
+
+    <scene id="scene5">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">90 seconds later...</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-5,117|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|-1,59">
+        <bubble t="translate(9,11)" pose="0,0|-20,10|-81,49|19,66|-21,145|-73,109">
+          <tspan x="0" y="-2em" fill="blue">$ kubectl get nodes | wc -l</tspan>
+          <tspan x="0" y="0em" fill="red">1001</tspan>
+          <tspan x="0" y="2em">1000 fake + 1 real minikube</tspan>
+          <tspan x="0" y="4em">ALL showing Ready.</tspan>
+          <tspan x="0" y="5em">on 2 CPUs. 4GB RAM.</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|18,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|-14,24|-36,69|27,28|8,72|-35,93">
+          <tspan x="0" y="-1em">the total memory</tspan>
+          <tspan x="0" y="0em">for 1000 nodes:</tspan>
+          <tspan x="0" y="2em" fill="blue">~57 MB</tspan>
+          <tspan x="0" y="4em">that's less than</tspan>
+          <tspan x="0" y="5em">one Chrome tab</tspan>
+        </bubble>
+      </actor>
+    </scene>
+
+    <scene id="scene6">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">Finding the real bottleneck</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-1,114|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|13,83">
+        <bubble t="translate(-3,0)" pose="0,0|-12,22|-83,104|45,21|-37,182|-58,162">
+          <tspan x="0" y="-3em">so where's the bottleneck?</tspan>
+          <tspan x="0" y="-1em">it's not CPU, not memory</tspan>
+          <tspan x="0" y="1em">it's <tspan fill="red">etcd fsync</tspan></tspan>
+          <tspan x="0" y="3em">every node creation is</tspan>
+          <tspan x="0" y="4em">a Raft commit + WAL fsync</tspan>
+          <tspan x="0" y="5em">that's the hard wall</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|13,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|7,33|14,66|-63,30|-52,62|-94,113">
+          <tspan x="0" y="-1em">1000 heartbeats</tspan>
+          <tspan x="0" y="0em">every 20 seconds =</tspan>
+          <tspan x="0" y="1em" fill="blue">50 writes/sec</tspan>
+          <tspan x="0" y="3em">my SSD handles 5000+</tspan>
+          <tspan x="0" y="4em">so we're at 1% capacity</tspan>
+          <tspan x="0" y="6em">room for 100K nodes!</tspan>
+        </bubble>
+      </actor>
+    </scene>
+
+    <scene id="scene7">
+      <label t="translate(0,346)">
+        <tspan x="0" y="0em">The production use cases are real</tspan>
+      </label>
+      <actor t="translate(71,19) rotate(-2)" pose="-11,9|-5,117|-11,99|-11,89|-11,79|-11,59|-16,34|-21,9|-6,34|-1,9|-18,79|-18,59|-6,79|-1,59">
+        <bubble t="translate(9,11)" pose="0,0|-20,10|-81,49|19,66|-21,145|-73,109">
+          <tspan x="0" y="-3em">this isn't just a party trick</tspan>
+          <tspan x="0" y="-1em">in CI/CD: test scheduling</tspan>
+          <tspan x="0" y="0em">across 500 fake nodes</tspan>
+          <tspan x="0" y="2em">test autoscaler configs</tspan>
+          <tspan x="0" y="3em">load test admission webhooks</tspan>
+          <tspan x="0" y="4em">find operator pagination bugs</tspan>
+        </bubble>
+      </actor>
+      <actor t="translate(159,15)" pose="28,1|30,109|28,91|28,81|28,71|28,51|18,31|18,1|33,26|38,1|23,71|18,51|38,71|38,51">
+        <bubble t="translate(-2,-9)" pose="0,0|-14,24|-36,69|27,28|8,72|-35,93">
+          <tspan x="0" y="0em">15 seconds to create</tspan>
+          <tspan x="0" y="1em">a 500-node topology</tspan>
+          <tspan x="0" y="3em">vs 20 minutes on AWS</tspan>
+          <tspan x="0" y="4em">and $0 instead of $$$</tspan>
+        </bubble>
+      </actor>
+    </scene>
+
+    <scene id="scene8" height="230">
+      <label t="translate(0,225)">
+        <tspan x="0" y="0em">The lesson</tspan>
+      </label>
+      <actor t="translate(209,4) rotate(2)" pose="-41,48|-10,105|0,88|0,78|0,68|0,48|-5,23|-10,-2|5,23|10,-2|-11,70|-4,54|17,86|-4,110">
+        <bubble t="translate(-2,-9)" pose="0,0|-13,24|-29,52|-86,-4|-99,79|-165,70">
+          <tspan x="0" y="-2em">Kubernetes is a</tspan>
+          <tspan x="0" y="-0.5em" fill="blue">database with controllers.</tspan>
+          <tspan x="0" y="1.5em">Nodes are just rows.</tspan>
+          <tspan x="0" y="3em">Remove the kubelets,</tspan>
+          <tspan x="0" y="4.5em">and the system doesn't</tspan>
+          <tspan x="0" y="6em">even blink.</tspan>
+        </bubble>
+      </actor>
+    </scene>
+
+    <scene id="scene9" width="300" height="98" margin-y="3" frame="no">
+      <label t="translate(20,67) rotate(-2)" pose="0,0|1,-9">
+        <tspan x="0" y="-2em">~ KWOK: Kubernetes Without Kubelet</tspan>
+        <tspan x="0" y="-1em">~ 1000 nodes = 57MB of memory</tspan>
+        <tspan x="0" y="0em">~ bottleneck: etcd fsync, not CPU/RAM</tspan>
+        <tspan x="0" y="1em">~ use it in CI to test at scale for $0</tspan>
+        <tspan x="0" y="2em">~ <tspan fill="red">the cluster is the database</tspan></tspan>
+        <tspan x="0" y="3em">~ the kubelet is just a status patcher</tspan>
+      </label>
+      <actor t="translate(192,29)" pose="73,-56|69,46|73,34|93,22|81,12|82,1|66,-10|63,-39|79,-16|92,-30|63,19|42,19|65,11|40,6">
+      </actor>
+    </scene>
+
+  </div>
+</body>
