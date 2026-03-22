@@ -9,3 +9,4 @@ print = { enable = true }
 additional-css = ["theme/custom.css"]
 
 [output.pdf]
+optional = true
