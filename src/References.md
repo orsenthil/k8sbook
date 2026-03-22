@@ -1,6 +1,6 @@
-1. Kubernetes Documentation - 
+1. Kubernetes Documentation -
 2. https://kwok.sigs.k8s.io/
-3. Comix https://orsenthil.github.io/cmx.js/edit/ 
+3. Comix https://orsenthil.github.io/cmx.js/edit/
 
 
 ## Acknowledgements

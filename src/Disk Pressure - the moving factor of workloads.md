@@ -1,4 +1,3 @@
-
 Kubernetes workloads are containers that are running on the machines. The containers are instances of an application created from a container image. Container images are bundled with the application and its dependencies. We build container images with a Dockerfile and its dependencies. The Dockerfile is how we define the container image that runs as the workload.
 
 The lifecycle of the pod from the docker image to a running container goes like this. When you run your application, you communicate with the API Server, which is called the Control Plane, and you ask the API Server to run your application, which is called a Pod on the Worker Node.

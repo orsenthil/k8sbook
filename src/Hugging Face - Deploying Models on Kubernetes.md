@@ -1,4 +1,3 @@
-
 Kubernetes cluster running ML workloads is a two-tier system. You have "thinking nodes" (CPU) that handle everything normal — your API servers, databases, queue workers, routing. And you have "crunching nodes" (GPU) that do one thing: tensor math, very fast.
 
 

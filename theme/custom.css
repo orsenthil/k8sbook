@@ -1,0 +1,49 @@
+/* Cover page */
+.cover-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.cover-page img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media print {
+    .cover-page {
+        page-break-after: always;
+        break-after: page;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    .cover-page img {
+        max-width: 100%;
+        max-height: 100vh;
+        object-fit: contain;
+    }
+
+    /* Each chapter starts on a new page */
+    h1[id^="chapter-"] {
+        page-break-before: always;
+        break-before: page;
+    }
+
+    /* Hide all navigation/sidebar chrome in print/PDF */
+    #mdbook-sidebar,
+    .sidebar,
+    .sidebar-resize-handle,
+    .sidebar-resize-indicator,
+    .sidebar-iframe-outer,
+    nav,
+    .nav-chapters,
+    .right-buttons,
+    .menu-bar,
+    .menu-bar-sticky-container {
+        display: none !important;
+        width: 0 !important;
+    }
+}

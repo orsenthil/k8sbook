@@ -1,3 +1,6 @@
+# Horizontal Autoscaler May not be Sufficient.
+
+
 Traffic spikes at 9 AM every Monday.  Your application running on kubernetes is supposed to handle the spike, but by the time it handles the users have already started noticing the latency.
 
 This is a problem with a slow reactor.  
@@ -186,23 +189,39 @@ func (c *ReplicaCalculator) GetResourceReplicas(...) (int32, ...) {
 ```
 
 
-
 The Fixes: From Reactive to Proactive
+
 Now that we understand the anatomy of the delay, here are the production strategies from simplest to most sophisticated:
+
+
 Fix 1: The N+2 Buffer (5 minutes, zero risk)
 Run more pods than your baseline requires. If you need 3 for normal traffic, run 5. Two extra pods absorb the spike while HPA catches up.
+
+```
 yamlspec:
   minReplicas: 5    # Not 3. 2 buffer pods = availability insurance
   maxReplicas: 20
+
+```
+
 Fix 2: Tighten the metrics pipeline (medium effort)
+
+```
 bash# Reduce HPA sync period from 15s to 10s (on kube-controller-manager)
 --horizontal-pod-autoscaler-sync-period=10s
+```
 
+
+```
 # Reduce metrics-server scrape interval
 # In the metrics-server Deployment args:
 - --metric-resolution=30s    # default is 60s
+```
+
 Fix 3: Aggressive scale-up behavior (the right YAML)
-yamlapiVersion: autoscaling/v2
+
+```yaml
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: ml-inference-hpa
@@ -234,9 +253,16 @@ spec:
       - type: Pods
         value: 2
         periodSeconds: 60
+
+```
+
+
 Fix 4: Scale on leading indicators, not lagging ones
+
 CPU is a lagging indicator — it rises after traffic hits. Scale instead on requests_per_second (a concurrent indicator) or queue depth (a leading indicator):
-yamlmetrics:
+
+```yaml
+metrics:
 - type: Pods
   pods:
     metric:
@@ -250,9 +276,16 @@ yamlmetrics:
     target:
       type: Utilization
       averageUtilization: 70              # CPU as safety net only
+
+```
+
+
 Fix 5: Predictive pre-scaling with CronJobs
+
 For the Monday morning problem specifically — you know when it's coming:
-yamlapiVersion: batch/v1
+
+```yaml
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: monday-prescale
@@ -270,6 +303,8 @@ spec:
             - -c
             - kubectl scale deployment ml-inference --replicas=10
           restartPolicy: OnFailure
+
+```
 
 Predictive Scaling by employing other technologies.
 
